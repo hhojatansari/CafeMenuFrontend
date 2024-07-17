@@ -1,79 +1,24 @@
 import dash
 from dash import html
+from dash import dcc
 import dash_bootstrap_components as dbc
 
+import views
+
 app = dash.Dash(
-    external_stylesheets=[dbc.themes.BOOTSTRAP, 'assets/style.css']
+    external_stylesheets=[dbc.themes.BOOTSTRAP]
 )
 
 app.title = 'Chenar Cafe'
 
 app.layout = dbc.Container(
     [
+        dcc.Location('base-url'),
         html.Div(
             [
                 html.Div(
-                    [
-                        html.Div('کافه چنار', className='card-title'),
-                        html.P('جایی برای خواندن، نوشتن و نوشیدن..', className='card-description'),
-                        html.Div(
-                            html.Div(
-                                [
-                                    html.Div(
-                                        [
-                                            html.Div(
-                                                [
-
-                                                    html.Img(
-                                                        src=app.get_asset_url('icons/pin.png'),
-                                                        className='loc-icon'
-                                                    ),
-                                                    html.Div('[ Location / آدرس ]')
-
-                                                ],
-                                                style={'text-align': 'center',
-                                                       'display': 'flex',
-                                                       'justify-content': 'center',
-                                                       'padding': '10px 0'}
-                                            ),
-                                            html.Div(
-                                                [
-
-                                                    html.Img(
-                                                        src=app.get_asset_url('icons/instagram.png'),
-                                                        className='insta-icon'
-                                                    ),
-                                                    html.Div('[ Instagram / اینستاگرام ]')
-
-                                                ],
-                                                style={'text-align': 'center',
-                                                       'display': 'flex',
-                                                       'justify-content': 'center',
-                                                       'padding': '10px 0'}
-                                            ),
-                                        ],
-                                        className='right-section'
-                                    ),
-                                    html.Div(className='middle-line'),
-                                    html.Div(
-                                        [
-                                            html.Img(
-                                                src=app.get_asset_url('icons/menu.png'),
-                                                className='menu-icon'
-                                            ),
-                                            html.Div('[ Menu / منو ]')
-                                        ],
-                                        className='left-section',
-                                        style={'padding': '25px 0'}
-                                    )
-                                ],
-                                className='card-enter'
-                            ),
-                            style={'display': 'flex',
-                                   'justify-content': 'center'}
-                        )
-                    ],
-                    className='container-card bg-yellow-box'
+                    className='container-card bg-yellow-box',
+                    id='main-section'
                 )
             ],
             className='my-card'
@@ -82,5 +27,20 @@ app.layout = dbc.Container(
     style={'min-width': '340px!important'}
 )
 
+
+@app.callback(
+    dash.Output('main-section', 'children'),
+    dash.Input('base-url', 'pathname')
+)
+def router(pathname):
+    print('pathname', pathname)
+    if pathname.lower() == '/':
+        return views.main.section
+    elif pathname.lower() == '/menu':
+        return views.menu.seciton
+    else:
+        return dash.no_update
+
+
 if __name__ == '__main__':
-    app.run(host='localhost')
+    app.run(host='localhost', port=5000, debug=True)
