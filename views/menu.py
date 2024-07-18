@@ -1,42 +1,50 @@
 import dash
+from dash import MATCH, ALL
+
 from dash import html, ctx
 import dash_bootstrap_components as dbc
-from app import app
+from server import app
 
 category = ['غذا', 'نوشیدنی']
+index_list = [10, 20]
 items = ['نوشابه', 'چای', 'لیموناد', 'قرمه سبزی', 'کاسه تف']
 
 seciton = [
-              html.Img(src=app.get_asset_url('header.jpg'), className='header-image', id='heyyou'),
-          ] + [
-              html.Div(
-                  [
-                      html.Div(
-                          [
-                              html.Div(cat, className='text-block'),
-                          ],
-                          className='category-image',
-                          style={'background': 'url("/assets/food.jpg")'},
-                          id={"type": "pattern-category", "index": index},
-                      ),
-                      dbc.Collapse(
-                          dbc.Card(dbc.CardBody("This content is hidden in the collapse")),
-                          id="collapse",
-                          is_open=True,
-                      ),
-                  ],
-                  style={'width': '80%'}
-              )
-              for index, cat in enumerate(category)
-          ]
+    html.Div(
+        [
+            html.Div(id='empty-div', style={'display': 'none'}),
+            dbc.Button(
+                [
+                    html.Div(cat, className='text-block'),
+                ],
+                className='category-image',
+                style={'background': 'url("/assets/food.jpg")',
+                       'width': '100%',
+                       'border-color': 'black'},
+                id={
+                    'type': 'category-pattern',
+                    'index': index_list[index]
+                }
+            ),
+            html.Div(
+                id={
+                    'type': 'category-pattern-output',
+                    'index': index_list[index]
+                }
+            )
+        ],
+        style={'width': '80%'}
+    )
+    for index, cat in enumerate(category)
+]
 
 
 @app.callback(
-    dash.Output("buttons-response", "children"),
-    # dash.Input({"type": "pattern-category", "index": dash.ALL}, "n_clicks"),
-    dash.Input('heyyou', 'click')
+    dash.Output({'type': 'category-pattern-output', 'index': MATCH}, "children"),
+    dash.Input({'type': 'category-pattern', 'index': MATCH}, 'n_clicks'),
+    prevent_initial_call=True
 )
 def display_output(cat):
-    print(ctx.triggered[0])
-    print(ctx.triggered[0]["value"])
+    print(ctx.triggered)
     print('category:', cat)
+    return 'چه خبر پسر جون'

@@ -3,13 +3,9 @@ from dash import html
 from dash import dcc
 import dash_bootstrap_components as dbc
 
+from server import app
 import views
 
-app = dash.Dash(
-    external_stylesheets=[dbc.themes.BOOTSTRAP]
-)
-
-app.title = 'Chenar Cafe'
 
 app.layout = dbc.Container(
     [
@@ -17,12 +13,16 @@ app.layout = dbc.Container(
         html.Div(
             [
                 html.Div(
-                    className='container-card bg-yellow-box',
-                    id='main-section'
-                )
+                    [
+                        html.Img(src=app.get_asset_url('header.jpg'), className='header-image'),
+                        html.Div(id='main-section'),
+                        html.Img(src=app.get_asset_url('footer.jpg'), className='footer-image')
+                    ],
+                    className='bg-yellow-box container-card',
+                ),
             ],
             className='my-card'
-        )
+        ),
     ],
     style={'min-width': '340px!important'}
 )

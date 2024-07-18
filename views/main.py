@@ -1,8 +1,9 @@
-from app import app
+from server import app
 from dash import html
+import dash_bootstrap_components as dbc
+
 
 section = [
-    html.Img(src=app.get_asset_url('header.jpg'), className='header-image'),
     # html.Div('کافه چنار', className='card-title'),
     # html.P('جایی برای خواندن، نوشتن و نوشیدن..', className='card-description'),
     html.Div(
@@ -66,6 +67,5 @@ section = [
         style={'display': 'flex',
                'justify-content': 'center',
                'width': '100%'}
-    ),
-    html.Img(src=app.get_asset_url('footer.jpg'), className='footer-image')
+    )
 ]
