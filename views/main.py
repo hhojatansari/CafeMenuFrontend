@@ -19,14 +19,15 @@ section = [
                                     className='loc-icon'
                                 ),
                                 html.A(html.Div('[ Location / آدرس ]'),
-                                       href='https://maps.app.goo.gl/1vzWj91mMApPKjwp7',
+                                       href='https://maps.app.goo.gl/N6b2q7CMAJom6ZJP9',
                                        target="popup")
 
                             ],
                             style={'text-align': 'center',
                                    'display': 'flex',
                                    'justify-content': 'center',
-                                   'padding': '10px 0'}
+                                   'padding': '10px 0',
+                                   'font-family': 'Lalezar'}
                         ),
                         html.Div(
                             [
@@ -43,7 +44,8 @@ section = [
                             style={'text-align': 'center',
                                    'display': 'flex',
                                    'justify-content': 'center',
-                                   'padding': '10px 0'}
+                                   'padding': '10px 0',
+                                   'font-family': 'Lalezar'}
                         ),
                     ],
                     className='right-section'
@@ -59,7 +61,8 @@ section = [
                                href='/menu')
                     ],
                     className='left-section',
-                    style={'padding': '25px 0'}
+                    style={'padding': '25px 0',
+                           'font-family': 'Lalezar'}
                 )
             ],
             className='card-enter'
