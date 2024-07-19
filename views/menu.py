@@ -89,9 +89,9 @@ def display_output(btn, is_open):
                     sub_items.append(
                         html.Div(
                             [
-                                html.Div(menu_dict[cat]['sub'][sub][item], style={'width': '20%', 'margin': '0 10px'}),
+                                html.Div(item, style={'width': '20%', 'margin': '0 10px'}),
                                 html.Hr(),
-                                html.Div('65', style={'width': '20%', 'margin': '0 10px'})
+                                html.Div(menu_dict[cat]['sub'][sub][item], style={'width': '20%', 'margin': '0 10px'})
                             ],
                             className='item'
                         )
