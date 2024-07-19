@@ -27,7 +27,8 @@ section = [
                                    'display': 'flex',
                                    'justify-content': 'center',
                                    'padding': '10px 0',
-                                   'font-family': 'Lalezar'}
+                                   'font-family': 'Lalezar',
+                                   'align-items': 'center'}
                         ),
                         html.Div(
                             [
@@ -45,7 +46,8 @@ section = [
                                    'display': 'flex',
                                    'justify-content': 'center',
                                    'padding': '10px 0',
-                                   'font-family': 'Lalezar'}
+                                   'font-family': 'Lalezar',
+                                   'align-items': 'center'}
                         ),
                     ],
                     className='right-section'

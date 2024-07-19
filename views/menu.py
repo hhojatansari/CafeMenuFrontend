@@ -14,6 +14,26 @@ items = {
     20: ['لیموناد', 'چای', 'اسپرسو']
 }
 
+menu_dict = {
+    'نوشیدنی': {
+        'index': 0,
+        'img': '/assets/drink.jpg',
+        'sub': {
+            'نوشیدنی گرم': {'چای سیاه': 70, 'چای ماسالا': 100},
+            'نوشیدنی خنک': {'موهیتو': 120, 'لیموناد': 120},
+            'نوشیدنی کافئین‌دار': {'اسپرسو': 50, 'آفوگاتو': 70},
+        }
+    },
+    'کیک و شیرینی': {
+        'index': 1,
+        'img': '/assets/cake.jpg',
+        'sub': {
+            'کیک': {'کیک شکلاتی': 70, 'چیزکیک': 100},
+            'شیرینی': {'شیرینی کوکی': 20, 'شیرینی زبان': 15},
+        }
+    }
+}
+
 seciton = [
     html.Div(
         [
@@ -23,39 +43,27 @@ seciton = [
                     html.Div(cat, className='text-block'),
                 ],
                 className='category-image',
-                style={'background': 'url("/assets/food.jpg")',
+                style={'background': 'url("{}") no-repeat'.format(menu_dict[cat]['img']),
+                       'background-size': '100% auto',
                        'width': '100%',
                        'border-color': 'black'},
                 id={
                     'type': 'category-pattern',
-                    'index': index_list[index]
+                    'index': menu_dict[cat]['index']
                 }
             ),
             dbc.Collapse(
                 dbc.Card(dbc.CardBody("This content is hidden in the collapse")),
                 id={
                     'type': 'category-pattern-output',
-                    'index': index_list[index]
+                    'index': menu_dict[cat]['index']
                 },
                 is_open=False,
-            ),
-            # html.Div([
-            #              html.Div('نوشیدنی', className='sub-category')
-            #          ] + [
-            #              html.Div(
-            #                  [
-            #                      html.Div(item, style={'width': '20%', 'margin': '0 10px'}),
-            #                      html.Hr(),
-            #                      html.Div('65', style={'width': '20%', 'margin': '0 10px'})
-            #                  ],
-            #                  className='item'
-            #              )
-            #              for item in items[20]
-            #          ])
+            )
         ],
         style={'width': '80%'}
     )
-    for index, cat in enumerate(category)
+    for cat in menu_dict
 ]
 
 
@@ -69,19 +77,26 @@ seciton = [
 def display_output(btn, is_open):
     category_index = ast.literal_eval(ctx.triggered[0]['prop_id'].split('.')[0])['index']
     if btn:
-        items_section = [html.Div('نوشیدنی', className='sub-category')]
-        for item in items[category_index]:
-            items_section.append(
-                html.Div([
-                    html.Div(
-                        [
-                            html.Div(item, style={'width': '20%', 'margin': '0 10px'}),
-                            html.Hr(),
-                            html.Div('65', style={'width': '20%', 'margin': '0 10px'})
-                        ],
-                        className='item'
+        items_section = []
+        for cat in menu_dict:
+            if menu_dict[cat]['index'] != category_index:
+                continue
+            sub_cat = []
+            for sub in menu_dict[cat]['sub']:
+                sub_cat.append(html.Div(sub, className='sub-category'))
+                sub_items = []
+                for item in menu_dict[cat]['sub'][sub]:
+                    sub_items.append(
+                        html.Div(
+                            [
+                                html.Div(menu_dict[cat]['sub'][sub][item], style={'width': '20%', 'margin': '0 10px'}),
+                                html.Hr(),
+                                html.Div('65', style={'width': '20%', 'margin': '0 10px'})
+                            ],
+                            className='item'
+                        )
                     )
-                ])
-            )
+                sub_cat.append(html.Div(sub_items))
+            items_section.append(html.Div(sub_cat))
         return items_section, not is_open
     return [], is_open
